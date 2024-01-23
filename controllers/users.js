@@ -129,7 +129,6 @@ export const loginUser = async (req, res) => {
         displayName: user.displayName,
         username: user.username,
         type: user.type,
-        req: req,
       },
     });
   } catch (error) {
