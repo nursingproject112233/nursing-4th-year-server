@@ -28,15 +28,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(cookieParser());
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 app.use(
   session({
-    proxy: true,
-    name: "universityNursing",
+    // proxy: true,
+    // name: "universityNursing",
     secret: "drthrthvfr",
     saveUninitialized: true,
     resave: true,
-    cookie: { secure: false, sameSite: "lax" },
+    // cookie: { secure: false, sameSite: "none" },
   })
 );
 
