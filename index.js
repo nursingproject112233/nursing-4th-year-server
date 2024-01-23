@@ -31,6 +31,7 @@ app.use(cookieParser());
 
 app.use(
   session({
+    name: "universityNursing",
     secret: "drthrthvfr",
     saveUninitialized: true,
     resave: true,
