@@ -36,7 +36,7 @@ app.use(
     secret: "drthrthvfr",
     saveUninitialized: true,
     resave: true,
-    cookie: { secure: false, sameSite: "none" },
+    cookie: { secure: false, sameSite: "lax" },
   })
 );
 
