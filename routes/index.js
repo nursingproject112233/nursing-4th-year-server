@@ -7,6 +7,7 @@ import ClinicalPlanRoutes from "./clinicalplan.js";
 
 const router = express.Router();
 
+router.use("/test", UserRoutes);
 router.use("/user", UserRoutes);
 
 router.use("/agency", AgencyRoutes);
