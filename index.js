@@ -36,7 +36,13 @@ app.use(
     secret: "drthrthvfr",
     saveUninitialized: true,
     resave: true,
+    name: "MyCoolWebAppCookieName",
     // cookie: { secure: false, sameSite: "none" },
+    cookie: {
+      secure: true, // required for cookies to work on HTTPS
+      httpOnly: false,
+      sameSite: "none",
+    },
   })
 );
 
