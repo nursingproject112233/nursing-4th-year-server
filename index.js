@@ -7,7 +7,7 @@ import indexRouter from "./routes/index.js";
 import bodyParser from "body-parser";
 import session from "express-session";
 import cookieParser from "cookie-parser";
-var MemoryStore = session.MemoryStore;
+
 mongoose.set("strictQuery", false);
 
 dotenv.config();
@@ -25,10 +25,11 @@ const corsOptions = {
   optionsSuccessStatus: 200,
   credentials: true,
 };
+
 app.use(cors(corsOptions));
 
 app.use(cookieParser());
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 app.use(
   session({
     // proxy: true,
@@ -37,13 +38,8 @@ app.use(
     saveUninitialized: true,
     resave: true,
     name: "MyCoolWebAppCookieName",
-    // cookie: { secure: false, sameSite: "none" },
-    cookie: {
-      secure: true, // required for cookies to work on HTTPS
-      httpOnly: false,
-      sameSite: "none",
-    },
-    store: new MemoryStore(),
+
+    // store: store,
   })
 );
 

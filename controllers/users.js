@@ -99,6 +99,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
+//new login - session working
 export const loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -107,34 +108,85 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Email or password is missing" });
     }
 
-    const user = await User.findOne({ username });
-    if (!user) {
-      return res
-        .status(400)
-        .json({ message: "No account found for this username" });
-    }
+    User.findOne({ username })
+      .then(async (user) => {
+        if (!user) {
+          return res
+            .status(400)
+            .json({ message: "No account found for this username" });
+        }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-      return res.status(400).json({ message: "Invalid credentials" });
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+          return res.status(400).json({ message: "Invalid credentials" });
+        }
 
-    // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-    req.session.user = user;
-    req.session.save();
+        // Set session data
+        req.session.isAuth = true;
+        req.session.user = user;
 
-    res.json({
-      user: {
-        id: user._id,
-        displayName: user.displayName,
-        username: user.username,
-        type: user.type,
-      },
-    });
+        // Save the session and send the response
+        req.session.save((err) => {
+          if (err) {
+            return res.status(500).json({ error: err.message });
+          }
+
+          res.json({
+            user: req.session.user,
+          });
+        });
+      })
+      .catch((err) => {
+        return res.status(500).json({ error: err.message });
+      });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 };
+
+//old login - session not working
+// export const loginUser = async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
+
+//     if (!username || !password) {
+//       return res.status(400).json({ message: "Email or password is missing" });
+//     }
+
+//     const user = await User.findOne({ username });
+//     if (!user) {
+//       return res
+//         .status(400)
+//         .json({ message: "No account found for this username" });
+//     }
+
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch)
+//       return res.status(400).json({ message: "Invalid credentials" });
+
+//     // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+//     let savedata = user;
+//     console.log("====================================");
+//     console.log(savedata);
+//     console.log("====================================");
+//     req.session.isAuth = true;
+//     req.session.user = savedata;
+//     req.session.save();
+
+//     res.json({
+//       user: {
+//         id: user._id,
+//         displayName: user.displayName,
+//         username: user.username,
+//         type: user.type,
+//       },
+//     });
+//   } catch (error) {
+//     return res.status(500).json({ error: error.message });
+//   }
+// };
 
 export const logoutUser = async (req, res) => {
   try {
