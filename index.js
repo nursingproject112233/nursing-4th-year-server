@@ -7,7 +7,7 @@ import indexRouter from "./routes/index.js";
 import bodyParser from "body-parser";
 import session from "express-session";
 import cookieParser from "cookie-parser";
-
+const store = new session.MemoryStore();
 mongoose.set("strictQuery", false);
 
 dotenv.config();
@@ -43,6 +43,7 @@ app.use(
       httpOnly: false,
       sameSite: "none",
     },
+    store,
   })
 );
 
