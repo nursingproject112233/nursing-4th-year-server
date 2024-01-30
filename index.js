@@ -6,12 +6,11 @@ import { connectToDB } from "./utils.js";
 import indexRouter from "./routes/index.js";
 import bodyParser from "body-parser";
 import session from "express-session";
-import cookieSession from "cookie-session";
 import cookieParser from "cookie-parser";
-// import { default as connectMongoDBSession } from "connect-mongodb-session";
+import { default as connectMongoDBSession } from "connect-mongodb-session";
 
 mongoose.set("strictQuery", false);
-// const MongoDBStore = connectMongoDBSession(session);
+const MongoDBStore = connectMongoDBSession(session);
 dotenv.config();
 // var store = new MongoDBStore({
 //   uri: "mongodb+srv://user:user@cluster0.kctlxex.mongodb.net/?retryWrites=true&w=majority",
@@ -34,34 +33,24 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(cookieParser());
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 app.use(
-  cookieSession({
-    name: "session",
-    keys: ["key1", "key2"],
+  session({
+    // proxy: true,
+    name: "universityNursing",
+    secret: "drthrthvfr",
+    saveUninitialized: true,
+    resave: true,
 
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      maxAge: 1000 * 60 * 60 * 48,
+      sameSite: "none",
+    },
+    // store: store,
   })
 );
-// app.set("trust proxy", 1);
-// app.use(
-//   session({
-//     // proxy: true,
-//     // name: "universityNursing",
-//     secret: "drthrthvfr",
-//     saveUninitialized: true,
-//     resave: true,
-//     name: "MyCoolWebAppCookieName",
-//     // cookie: {
-//     //   httpOnly: true,
-//     //   secure: true,
-//     //   maxAge: 1000 * 60 * 60 * 48,
-//     //   sameSite: "none",
-//     // },
-//     store: store,
-//   })
-// );
 
 app.use("", indexRouter);
 
