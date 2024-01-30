@@ -122,7 +122,14 @@ export const loginUser = async (req, res) => {
         }
 
         // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        // const token = jwt.sign(
+        //   {
+        //     data: user,
+        //   },
+        //   process.env.JWT_SECRET
+        // );
 
+        // localStorage.setItem("userToken", token);
         // Set session data
         req.session.user = user;
 
@@ -132,8 +139,8 @@ export const loginUser = async (req, res) => {
             return res.status(500).json({ error: err.message });
           }
 
-          res.json({
-            user: req.session.user,
+          return res.json({
+            user: user,
           });
         });
       })
