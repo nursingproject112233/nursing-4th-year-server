@@ -42,13 +42,13 @@ app.use(
     saveUninitialized: true,
     resave: true,
 
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      maxAge: 1000 * 60 * 60 * 48,
-      sameSite: "none",
-    },
-    store: store,
+    // cookie: {
+    //    httpOnly: true,
+    //   secure: false,
+    //   maxAge: 1000 * 60 * 60 * 48,
+    //   sameSite: "none",
+    // },
+    // store: store,
   })
 );
 
