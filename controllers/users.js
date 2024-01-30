@@ -125,19 +125,17 @@ export const loginUser = async (req, res) => {
 
         // Set session data
         req.session.user = user;
-        res.json({
-          user: req.session.user,
-        });
-        // Save the session and send the response
-        // req.session.save((err) => {
-        //   if (err) {
-        //     return res.status(500).json({ error: err.message });
-        //   }
 
-        //   res.json({
-        //     user: req.session.user,
-        //   });
-        // });
+        // Save the session and send the response
+        req.session.save((err) => {
+          if (err) {
+            return res.status(500).json({ error: err.message });
+          }
+
+          res.json({
+            user: req.session.user,
+          });
+        });
       })
       .catch((err) => {
         return res.status(500).json({ error: err.message });
@@ -194,8 +192,7 @@ export const loginUser = async (req, res) => {
 
 export const logoutUser = async (req, res) => {
   try {
-    // req.session.destroy();
-    req.session = null;
+    req.session.destroy();
     return res.status(200).json({ message: "Logged out successfully!" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
