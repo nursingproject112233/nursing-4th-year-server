@@ -38,7 +38,12 @@ app.use(
     saveUninitialized: true,
     resave: true,
     name: "MyCoolWebAppCookieName",
-
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      maxAge: 1000 * 60 * 60 * 48,
+      sameSite: "none",
+    },
     // store: store,
   })
 );
