@@ -12,10 +12,10 @@ import { default as connectMongoDBSession } from "connect-mongodb-session";
 mongoose.set("strictQuery", false);
 const MongoDBStore = connectMongoDBSession(session);
 dotenv.config();
-// var store = new MongoDBStore({
-//   uri: "mongodb+srv://user:user@cluster0.kctlxex.mongodb.net/?retryWrites=true&w=majority",
-//   collection: "mySessions",
-// });
+var store = new MongoDBStore({
+  uri: "mongodb+srv://user:user@cluster0.kctlxex.mongodb.net/?retryWrites=true&w=majority",
+  collection: "mySessions",
+});
 const app = express();
 const port = process.env.PORT || 8000;
 app.use(bodyParser.json());
@@ -48,7 +48,7 @@ app.use(
       maxAge: 1000 * 60 * 60 * 48,
       sameSite: "none",
     },
-    // store: store,
+    store: store,
   })
 );
 
