@@ -124,24 +124,28 @@ export const loginUser = async (req, res) => {
         // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
         // Set session data
-        req.session.isAuth = true;
         req.session.user = user;
-
-        // Save the session and send the response
-        req.session.save((err) => {
-          if (err) {
-            return res.status(500).json({ error: err.message });
-          }
-
-          res.json({
-            user: req.session.user,
-          });
+        res.json({
+          user: req.session.user,
         });
+        // Save the session and send the response
+        // req.session.save((err) => {
+        //   if (err) {
+        //     return res.status(500).json({ error: err.message });
+        //   }
+
+        //   res.json({
+        //     user: req.session.user,
+        //   });
+        // });
       })
       .catch((err) => {
         return res.status(500).json({ error: err.message });
       });
   } catch (error) {
+    console.log("====================================");
+    console.log(error);
+    console.log("====================================");
     return res.status(500).json({ error: error.message });
   }
 };
@@ -190,7 +194,8 @@ export const loginUser = async (req, res) => {
 
 export const logoutUser = async (req, res) => {
   try {
-    req.session.destroy();
+    // req.session.destroy();
+    req.session = null;
     return res.status(200).json({ message: "Logged out successfully!" });
   } catch (error) {
     return res.status(500).json({ error: error.message });
