@@ -36,7 +36,7 @@ app.use(cookieParser());
 app.set("trust proxy", 1);
 app.use(
   session({
-    // proxy: true,
+    proxy: true,
     name: "universityNursing",
     secret: "drthrthvfr",
     saveUninitialized: true,
