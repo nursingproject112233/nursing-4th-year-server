@@ -86,9 +86,10 @@ const port = process.env.PORT || 8000;
 app.use(bodyParser.json());
 // app.use(cors());
 const corsOptions = {
-  origin: ["http://localhost:3000", "http://localhost:5173", "https://test-nursing-sem4.netlify.app/login"], // Replace with your frontend's URL
+  //   origin: ["http://localhost:3000", "http://localhost:5173","https://test-nursing-sem4.netlify.app/login"], // Replace with your frontend's URL
+  origin: ["https://test-nursing-sem4.netlify.app/login"],
   optionsSuccessStatus: 200,
-  credentials: true
+  credentials: true,
 };
 app.use(cors(corsOptions));
 
@@ -102,7 +103,7 @@ app.use(
     cookie: {
       secure: true, // Set to true if using https, else set to false
       httpOnly: true, // Prevents client-side JS from reading the cookie
-      maxAge: 1000 * 60 * 60 * 24 // one day
+      maxAge: 1000 * 60 * 60 * 24, // one day
     },
   })
 );
@@ -117,4 +118,4 @@ app.use("/", indexRouter);
   } catch (err) {
     console.warn(err);
   }
-}());
+})();
