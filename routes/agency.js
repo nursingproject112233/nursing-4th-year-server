@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import express from "express";
 import {
     addAgency, deleteAgency, getAgencies, updateAgency, getAgency, agencyPlacements, toggleAgencyRegistration, agencyToggleDetails, importAgency

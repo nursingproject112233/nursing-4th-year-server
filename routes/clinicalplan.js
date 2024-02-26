@@ -1,4 +1,6 @@
+/* eslint-disable object-curly-spacing */
 import express from "express";
+// eslint-disable-next-line object-curly-newline
 import {getClinicalPlans, addClinicalPlan, getSemOptions, setSemOptions, delSemOptions, toggleClinicalPlanRegistration, clinicalPlanToggleDetails} from "../controllers/clinicalplan.js";
 import Auth from "../middleware/auth.js";
 import adminAuth from "../middleware/adminAuth.js";

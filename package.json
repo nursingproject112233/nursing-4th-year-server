@@ -35,5 +35,6 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "html-loader": "^4.2.0"
-  },"proxy": "https://energetic-handbag-pig.cyclic.app"
+  },
+  "proxy": "https://energetic-handbag-pig.cyclic.app"
 }
