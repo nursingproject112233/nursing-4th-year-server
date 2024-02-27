@@ -20,7 +20,7 @@ export const testUser = async (req, res) => {
 };
 export const getUser = async (req, res) => {
   try {
-    const user = req.session.user;
+    const user = req.user;
 
     return res.json({
       id: user._id,
@@ -34,7 +34,11 @@ export const getUser = async (req, res) => {
 // To get details of loggedIn user, whether a user is a student or admin
 export const getUserDetails = async (req, res) => {
   try {
-    const user = req.session.user;
+    const user = req.user;
+
+    console.log("====================================");
+    console.log("user", user);
+    console.log("====================================");
     if (!user) {
       return res.json({ loggedin: false });
     }
@@ -122,17 +126,20 @@ export const loginUser = async (req, res) => {
         }
 
         // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-        // const token = jwt.sign(
-        //   {
-        //     data: user,
-        //   },
-        //   process.env.JWT_SECRET
-        // );
+        const token = jwt.sign(
+          {
+            data: user,
+          },
+          process.env.JWT_SECRET
+        );
 
         // localStorage.setItem("userToken", token);
         // Set session data
-        req.session.user = user;
-
+        req.user = user;
+        return res.json({
+          user: user,
+          token: token,
+        });
         // Save the session and send the response
         req.session.save((err) => {
           if (err) {
@@ -181,7 +188,7 @@ export const loginUser = async (req, res) => {
 //     console.log(savedata);
 //     console.log("====================================");
 //     req.session.isAuth = true;
-//     req.session.user = savedata;
+//     req.user = savedata;
 //     req.session.save();
 
 //     res.json({

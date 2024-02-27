@@ -6,7 +6,7 @@ import Student from "../models/students.js";
 
 export const getAgencies = async (req, res) => {
   try {
-    const user_details = req.session.user;
+    const user_details = req.user;
     const agency_type = req.body.type;
     if (!agency_type) {
       return res.status(400).json({ message: "agency_type is missing!" });
@@ -56,7 +56,7 @@ export const getAgency = async (req, res) => {
 
 export const addAgency = async (req, res) => {
   try {
-    const user = req.session.user;
+    const user = req.user;
     if (user.type == "student") {
       return res.status(401).json({ message: "Unauthorized access!" });
     }
@@ -80,7 +80,7 @@ export const addAgency = async (req, res) => {
 
 export const updateAgency = async (req, res) => {
   try {
-    const user = req.session.user;
+    const user = req.user;
     if (user.type == "student") {
       return res.status(401).json({ message: "Unauthorized access!" });
     }
@@ -107,7 +107,7 @@ export const updateAgency = async (req, res) => {
 };
 export const deleteAgency = async (req, res) => {
   try {
-    const user = req.session.user;
+    const user = req.user;
     if (user.type == "student") {
       return res.status(401).json({ message: "Unauthorized access!" });
     }
@@ -133,7 +133,7 @@ export const deleteAgency = async (req, res) => {
 // get lsit of placements of an agency
 export const agencyPlacements = async (req, res) => {
   try {
-    const user = req.session.user;
+    const user = req.user;
 
     if (user.type == "student") {
       // if request is from student
@@ -152,13 +152,11 @@ export const agencyPlacements = async (req, res) => {
         .status(200)
         .json({ agency, total_count, message: "No placements" });
     }
-    return res
-      .status(200)
-      .json({
-        agency,
-        total_count,
-        msg: "list of placements of requested agency",
-      });
+    return res.status(200).json({
+      agency,
+      total_count,
+      msg: "list of placements of requested agency",
+    });
   } catch (err) {
     return res.status(400).json({ message: err.message });
   }
@@ -167,8 +165,11 @@ export const agencyPlacements = async (req, res) => {
 // ON/OFF hosiptal/community registration
 export const toggleAgencyRegistration = async (req, res) => {
   try {
-    const user = req.session.user;
+    const user = req.user;
     const { hospital, community } = req.body;
+    console.log("====================================");
+    console.log(user);
+    console.log("====================================");
     req.body.updated_by = user._id;
     if (hospital && !(typeof hospital == "boolean")) {
       return res.status(400).json({ message: "Invalid data provided" });
