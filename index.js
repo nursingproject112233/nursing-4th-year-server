@@ -7,24 +7,15 @@ import bodyParser from "body-parser";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 // eslint-disable-next-line import/no-named-default
-import { default as connectMongoDBSession } from "connect-mongodb-session";
+
 import indexRouter from "./routes/index.js";
 import { connectToDB } from "./utils.js";
 
-// mongoose.set("strictQuery", false);
-// const MongoDBStore = connectMongoDBSession(session);
 dotenv.config();
-const mongodbURI =
-  "mongodb+srv://user:user@cluster0.kctlxex.mongodb.net/?retryWrites=true&w=majority";
-const store = new MongoDBStore({
-  // uri: "mongodb+srv://user:user@cluster0.kctlxex.mongodb.net/?retryWrites=true&w=majority",
-  uri: process.env.mongodbURI,
-  collection: "mySessions",
-});
+
 const app = express();
 const port = process.env.PORT || 8000;
 app.use(bodyParser.json());
-// app.use(cors());
 const corsOptions = {
   origin: [
     "http://localhost:8000",
